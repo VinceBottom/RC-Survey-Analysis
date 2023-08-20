@@ -1,0 +1,99 @@
+import pandas as pd
+import os
+import numpy as np
+os.chdir("C:\\Users\\Vince\\Downloads")
+df = pd.read_excel("YelpDS.xlsx")
+print(df)
+##create new categorical variable to classify connoisseurs by 'often' or 'very often' responses
+df['RC'] = 1
+df['RC'] = np.where((df['Q2'] == 'Often') | (df['Q2'] == 'Very often'), 2, 1)##high engagement group is 2
+print(df['RC'])
+##Output code for times attended award-winning restaurant
+##Times attended James Beard/Michelin restaurant
+# output = pd.crosstab(df['Q3'],df['RC'], normalize='columns')
+# f = open('RCoutput.txt', 'a')
+# f.write('Times attended award winning restaurants' + '\n')
+# f.write(str(output) + '\n')
+# f.close()
+# ##Food quality rating versus other factors
+# output = df.groupby('RC')['Q7_1'].mean()##food quality
+# f = open('RCoutput.txt', 'a')
+# f.write('Food quality' + '\n')
+# f.write(str(output) + '\n')
+# f.close()
+# ##
+# output = df.groupby('RC')['Q7_2'].mean()##service
+# f = open('RCoutput.txt', 'a')
+# f.write('Service' + '\n')
+# f.write(str(output) + '\n')
+# f.close()
+# ##
+# output = df.groupby('RC')['Q7_3'].mean()##ambiance
+# f = open('RCoutput.txt', 'a')
+# f.write('Ambiance' + '\n')
+# f.write(str(output) + '\n')
+# f.close()
+# ##
+# output = df.groupby('RC')['Q7_4'].mean()##price of food
+# f = open('RCoutput.txt', 'a')
+# f.write('Price' + '\n')
+# f.write(str(output) + '\n')
+# f.close()
+# ##
+# output = df.groupby('RC')['Q7_5'].mean()##nearby location
+# f = open('RCoutput.txt', 'a')
+# f.write('Location' + '\n')
+# f.write(str(output) + '\n')
+# f.close()
+##stack df to get multiple response frequencies for restaurant search type for connoisseurs
+##and non-connoisseurs
+dfRC = df[df['RC'] == 2]
+dfNRC = df[df['RC'] == 1]
+##
+dfRC1 = dfRC['Q5']
+dfRC1 = dfRC1.str.split(',', expand=True)
+print(dfRC1)
+dfRC2 = dfRC['Q19']
+dfRC2 = dfRC2.str.split(',', expand=True)
+dfRC3 = dfRC['Q20']
+dfRC3.to_csv('RC3.csv')
+dfRC3 = dfRC3.str.split(',', expand=True)
+##
+dfNRC1 = dfNRC['Q5']
+dfNRC1 = dfNRC1.str.split(',', expand=True)
+dfNRC2 = dfNRC['Q19']
+dfNRC2 = dfNRC2.str.split(',', expand=True)
+dfNRC3 = dfNRC['Q20']
+dfNRC3.to_csv('NRC3.csv')
+dfNRC3 = dfNRC3.str.split(',', expand=True)
+##
+RC1stack = dfRC1.stack()
+RC2stack = dfRC2.stack()
+RC3stack = dfRC3.stack()
+##
+NRC1stack = dfNRC1.stack()
+NRC2stack = dfNRC2.stack()
+NRC3stack = dfNRC3.stack()
+##
+##output code for multiple response crosstabs
+# f = open('RC_MRoutput.txt', "a")
+# f.write('Restaurant connoisseur question 1' + '\n')
+# f.write(str(RC1stack.value_counts()) + '\n')
+# f.write('Non-connoisseur question 1' + '\n')
+# f.write(str(NRC1stack.value_counts()) + '\n' + '\n')
+# ##
+# f.write('Restaurant connoisseur question 2' + '\n')
+# f.write(str(RC2stack.value_counts()) + '\n')
+# f.write('Non-connoisseur question 2' + '\n')
+# f.write(str(NRC2stack.value_counts()) + '\n' + '\n')
+# ##
+# f.write('Restaurant connoisseur question 3' + '\n')
+# f.write(str(RC3stack.value_counts()) + '\n')
+# f.write('Non-connoisseur question 3' + '\n')
+# f.write(str(NRC3stack.value_counts()) + '\n')
+
+
+# print(pd.crosstab(df['Q7_2'],df['RC'], normalize='columns'))
+# print(pd.crosstab(df['Q7_3'],df['RC'], normalize='columns'))
+# print(pd.crosstab(df['Q7_4'],df['RC'], normalize='columns'))
+# print(pd.crosstab(df['Q7_5'],df['RC'], normalize='columns'))
