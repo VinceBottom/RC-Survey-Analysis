@@ -1,11 +1,11 @@
 import pandas as pd
 import os
 import numpy as np
-os.chdir("C:\\Users\\Vince\\Downloads")
+os.chdir("C:\\Users\\Vince\\Downloads")##changes directory to file location
 df = pd.read_excel("YelpDS.xlsx")
 print(df)
 ##create new categorical variable to classify connoisseurs by 'often' or 'very often' responses
-df['RC'] = 1
+df['RC'] = 1##sets default to group 1 to then classify survey respondents to group 2 in the next line based on often or very often answers
 df['RC'] = np.where((df['Q2'] == 'Often') | (df['Q2'] == 'Very often'), 2, 1)##high engagement group is 2
 print(df['RC'])
 ##Output code for times attended award-winning restaurant
@@ -15,34 +15,34 @@ print(df['RC'])
 # f.write('Times attended award winning restaurants' + '\n')
 # f.write(str(output) + '\n')
 # f.close()
-# ##Food quality rating versus other factors
-# output = df.groupby('RC')['Q7_1'].mean()##food quality
+# ##Measuring aspects of restaurant experience to customers
+# output = df.groupby('RC')['Q7_1'].mean()##Aspect 1
 # f = open('RCoutput.txt', 'a')
-# f.write('Food quality' + '\n')
+# f.write('Aspect 1' + '\n')
 # f.write(str(output) + '\n')
 # f.close()
 # ##
-# output = df.groupby('RC')['Q7_2'].mean()##service
+# output = df.groupby('RC')['Q7_2'].mean()##Aspect 2
 # f = open('RCoutput.txt', 'a')
-# f.write('Service' + '\n')
+# f.write('Aspect 2' + '\n')
 # f.write(str(output) + '\n')
 # f.close()
 # ##
-# output = df.groupby('RC')['Q7_3'].mean()##ambiance
+# output = df.groupby('RC')['Q7_3'].mean()##Aspect 3
 # f = open('RCoutput.txt', 'a')
-# f.write('Ambiance' + '\n')
+# f.write('Aspect 3' + '\n')
 # f.write(str(output) + '\n')
 # f.close()
 # ##
-# output = df.groupby('RC')['Q7_4'].mean()##price of food
+# output = df.groupby('RC')['Q7_4'].mean()##Aspect 4
 # f = open('RCoutput.txt', 'a')
-# f.write('Price' + '\n')
+# f.write('Aspect 4' + '\n')
 # f.write(str(output) + '\n')
 # f.close()
 # ##
-# output = df.groupby('RC')['Q7_5'].mean()##nearby location
+# output = df.groupby('RC')['Q7_5'].mean()##Aspect 5
 # f = open('RCoutput.txt', 'a')
-# f.write('Location' + '\n')
+# f.write('Aspect 5' + '\n')
 # f.write(str(output) + '\n')
 # f.close()
 ##stack df to get multiple response frequencies for restaurant search type for connoisseurs
